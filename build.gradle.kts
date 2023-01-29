@@ -9,15 +9,17 @@ version = "0.0.0"
 
 repositories {
     mavenCentral()
-    maven ( url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven ( url = "https://oss.sonatype.org/content/repositories/snapshots")
-    maven ( url = "https://oss.sonatype.org/content/repositories/central")
+    maven(url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
+    maven(url = "https://oss.sonatype.org/content/repositories/central")
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     compileOnly(kotlin("stdlib-jdk8"))
     compileOnly(kotlin("reflect"))
+
+    compileOnly(files("libs/KotlinBukkitAPI.jar"))
 }
 
 tasks.test {
