@@ -2,13 +2,16 @@ package daylightnebula.infinitymc
 
 import br.com.devsrsouza.kotlinbukkitapi.extensions.text.translateColor
 import org.bukkit.Bukkit
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityPickupItemEvent
+import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryEvent
+import org.bukkit.event.inventory.PrepareItemCraftEvent
 import org.bukkit.event.player.PlayerJoinEvent
 
 object PlayerListener: Listener {
@@ -81,5 +84,14 @@ object PlayerListener: Listener {
         if (event.slot < 9 || event.slot >= 54) return
         event.isCancelled = true
         event.whoClicked.setItemOnCursor(event.currentItem?.clone())
+    }
+
+    @EventHandler
+    fun onCraftItem(event: CraftItemEvent) {
+        if (event.inventory.matrix.any { it.itemMeta?.displayName?.contains("&5".translateColor()) == true }) {
+            event.isCancelled = true
+            (event.whoClicked as Player).playSound(event.whoClicked.location, Sound.ENTITY_VILLAGER_NO, 1f, 1f)
+            event.whoClicked.sendMessage("&cYou cannot craft with infinite items!".translateColor())
+        }
     }
 }
